@@ -5,8 +5,9 @@ import click
 
 def train_pipeline(config_path: str):
     """train pipeline"""
-    data_params = read_training_pipeline_params(config_path).dataparams
-    data, fields = iterators_and_fields(**vars(data_params))
+    all_params = read_training_pipeline_params(config_path)
+    data_params_dict = vars(all_params.dataparams)
+    data, fields = iterators_and_fields(**data_params_dict)
 
 
 @click.command(name='train_pipeline')
