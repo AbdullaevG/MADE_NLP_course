@@ -2,6 +2,7 @@
 def flatten(l):
     return [item for sublist in l for item in sublist]
 
+
 def remove_tech_tokens(mystr, tokens_to_remove=['<eos>', '<sos>', '<unk>', '<pad>']):
     return [x for x in mystr if x not in tokens_to_remove]
 

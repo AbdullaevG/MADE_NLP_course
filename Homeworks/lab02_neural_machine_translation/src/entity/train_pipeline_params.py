@@ -4,12 +4,16 @@ from dataclasses import dataclass
 from marshmallow_dataclass import class_schema
 import yaml
 from .data_params import DataParams
+from .seq2seq_params import Seq2SeqParams
+from .train_params import TrainParams
+
 
 @dataclass
 class TrainingPipelineParams:
     """Structure for pipeline parameters"""
     dataparams: DataParams
-
+    seq2seqparams: Seq2SeqParams
+    trainparams: TrainParams
 
 TrainingPipelineParamsSchema = class_schema(TrainingPipelineParams)
 
