@@ -61,6 +61,7 @@ def train_model(model,
                 criterion,
                 train_iterator,
                 valid_iterator,
+                trg_vocab,
                 logging_file,
                 best_model_path,
                 clip,
@@ -79,8 +80,8 @@ def train_model(model,
     logger.info("Start training model...")
     for num_epoch in range(num_epochs):
         logging.info(f"epoch: {num_epoch + 1}")
-        train_loss, train_time = step(model, optimizer, criterion, clip, train_iterator, phase="train")
-        valid_loss, bleu, valid_time = step(model, optimizer, criterion, clip, valid_iterator, phase="valid")
+        train_loss, train_time = step(model, optimizer, criterion, clip, train_iterator, trg_vocab, phase="train")
+        valid_loss, bleu, valid_time = step(model, optimizer, criterion, clip, valid_iterator, trg_vocab, phase="valid")
 
         if bleu > best_bleu:
             best_bleu = bleu
