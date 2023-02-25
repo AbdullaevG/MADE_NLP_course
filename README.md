@@ -21,6 +21,7 @@ The Missing Semester of Your CS Education, https://missing.csail.mit.edu, – з
 9. [en] Курс по Quantum Machine Learning на платформе edX: https://www.edx.org/course/quantum-machine-learning
 
 Полезные ссылки/материалы:
+
 10. [ru] Рубрика “Читаем статьи за вас” от ODS: https://habr.com/ru/company/ods/
 11. [ru] Пост на Хабре, описывающий систему Zettelkasten:  https://habr.com/ru/post/538836
 12. Удобный локальный редактор заметок с возможностью указывать связи между ними: https://obsidian.md Обладает большим количеством расширений (например, Juggle для типизации связей), работает с математической нотацией.
