@@ -75,14 +75,14 @@ class Decoder(nn.Module):
 
 
 class Seq2Seq(nn.Module):
-    def __init__(self, encoder, decoder, teacher_forcing_ratio):
+    def __init__(self, encoder, decoder):
         super().__init__()
 
         self.enc = encoder
         self.dec = decoder
-        self.teach_force_rat = teacher_forcing_ratio
 
-    def forward(self, src, trg):
+
+    def forward(self, src, trg, teacher_forcing_ratio):
         batch_size = trg.shape[1]
         max_len = trg.shape[0]
         trg_vocab_size = self.dec.output_dim
@@ -94,7 +94,7 @@ class Seq2Seq(nn.Module):
             # print(max(input_))
             dec_output_t, h_pred, c_pred = self.dec(input_, h_pred, c_pred)
             outputs[t] = dec_output_t
-            teacher_force = random.random() < self.teach_force_rat
+            teacher_force = random.random() < teacher_forcing_ratio
             top1 = dec_output_t.max(1)[1]
             input_ = (trg[t] if teacher_force else top1)
 
@@ -109,10 +109,10 @@ def base_seq2seq(enc_inp_dim,
                  dec_hid_dim,
                  enc_dropout,
                  dec_dropout,
-                 teacher_forcing_ratio,
-                 n_layers):
+                 n_layers,
+                 save_path):
     encoder = Encoder(enc_inp_dim, enc_emb_dim, enc_hid_dim, n_layers, enc_dropout)
     decoder = Decoder(dec_out_dim, dec_emb_dim, dec_hid_dim, n_layers, dec_dropout)
 
-    seq2seq = Seq2Seq(encoder, decoder, teacher_forcing_ratio)
-    return seq2seq
+    seq2seq = Seq2Seq(encoder, decoder)
+    return seq2seq, save_path

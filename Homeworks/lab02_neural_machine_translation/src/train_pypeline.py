@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 handler = logging.StreamHandler(sys.stdout)
 logger.setLevel(logging.INFO)
 logger.addHandler(handler)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def train_pipeline(config_path: str, report_file: str):
@@ -27,9 +28,9 @@ def train_pipeline(config_path: str, report_file: str):
     SRC, TRG = fields
     base_model_params = vars(all_params.seq2seqparams)
     logger.info("Try build the baseline model...")
-    base_model = base_seq2seq(len(SRC.vocab), len(TRG.vocab), **base_model_params)
+    base_model, save_model_path = base_seq2seq(len(SRC.vocab), len(TRG.vocab), **base_model_params)
     logger.info("baseline loaded!!!")
-    criterion = nn.BCELoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(base_model.parameters())
     train_params = all_params.trainparams
     train_model(base_model,
@@ -37,17 +38,22 @@ def train_pipeline(config_path: str, report_file: str):
                 criterion,
                 train_iterator,
                 valid_iterator,
+                TRG.vocab,
                 report_file,
+                save_model_path,
                 train_params.clip,
                 train_params.num_epochs,
+                train_params.teacher_forcing_ratio,
+                train_params.translated_examples_file
                 )
+
 
 @click.command(name='train_pipeline')
 @click.argument('config_path', default='configs/train_config.yml')
-@ click.argument('report_file', default='reports/baseline')
-def train_pipeline_command(config_path: str):
+@ click.argument('report_file', default='reports/baseline.log')
+def train_pipeline_command(config_path: str, report_file: str):
     """ Make start for terminal """
-    train_pipeline(config_path)
+    train_pipeline(config_path, report_file)
 
 
 if __name__ == '__main__':
