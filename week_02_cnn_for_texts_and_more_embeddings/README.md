@@ -7,7 +7,8 @@ Solved version:
 Further readings:
 
 1. CS231n page about CNNs: https://cs231n.github.io/convolutional-networks/
-2. Blog post about text classification with RNNs and CNNs blogpost:
+2. Lena Voita course, cnn for text classification: https://lena-voita.github.io/nlp_course.html
+3. Blog post about text classification with RNNs and CNNs blogpost:
    https://medium.com/jatana/report-on-text-classification-using-cnn-rnn-han-f0e887214d5f
-3. Convolutional Neural Networks for Sentence Classification:
+4. Convolutional Neural Networks for Sentence Classification:
    https://arxiv.org/abs/1408.5882
